@@ -16,8 +16,24 @@ styleSheet.replaceSync(styles);
 
 document.body.style.position = 'relative';
 
-createReactCard('carousel-card', CarouselCard, styleSheet);
-createReactCard('room-card', RoomCard, styleSheet);
-createReactCard('door-open-card', DoorOpenCard, styleSheet);
-createReactCard('header-card', HeaderCard, styleSheet);
-createReactCard('transportnsw-card', TransportNSWCard, styleSheet);
+const isDev = import.meta.env.DEV;
+
+const init = async () => {
+
+  if (!isDev) {
+    const response = await fetch('http://localhost:5173/src/ha-dev.ts', {
+      method: 'HEAD',
+    });
+    if (response.ok) {
+      return;
+    }
+  }
+
+  createReactCard('carousel-card', CarouselCard, styleSheet);
+  createReactCard('room-card', RoomCard, styleSheet);
+  createReactCard('door-open-card', DoorOpenCard, styleSheet);
+  createReactCard('header-card', HeaderCard, styleSheet);
+  createReactCard('transportnsw-card', TransportNSWCard, styleSheet);
+};
+
+init();
