@@ -35,8 +35,8 @@ export const RoomCard = ({ hass, config }: ReactCardProps<Config>) => {
   );
   const blindsState = useEntityState(hass, currentConfig.blinds_entity);
 
-  const backgroundImage =
-    'https://cdn.midjourney.com/0e101d9a-5443-4c01-8f2a-c2f4193edfc2/0_2.png';
+  // const backgroundImage =
+  //   'https://cdn.midjourney.com/0e101d9a-5443-4c01-8f2a-c2f4193edfc2/0_2.png';
 
   const handleLightAction = () => {
     handleAction(
@@ -67,7 +67,7 @@ export const RoomCard = ({ hass, config }: ReactCardProps<Config>) => {
   return (
     <Card
       className="bg-cover bg-center h-full overflow-hidden relative"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
+      // style={{ backgroundImage: `url(${backgroundImage})` }}
       ref={cardRef}
     >
       <div
@@ -79,7 +79,7 @@ export const RoomCard = ({ hass, config }: ReactCardProps<Config>) => {
         )}
       >
         <CardHeader className="flex gap-3 flex-row">
-          <div className="flex-auto flex flex-col space-y-3">
+          <div className="flex-auto flex gap-3 items-center">
             <Button
               size="icon-lg"
               aria-label="Lights"
@@ -93,26 +93,33 @@ export const RoomCard = ({ hass, config }: ReactCardProps<Config>) => {
                   ? 'shadow-[0_0_48px_20px_rgba(0,0,0,0.3)] shadow-yellow-300'
                   : '',
               )}
-              style={{ "--tw-shadow-color": `rgb(${lightColorState.value})` }}
+              style={{ '--tw-shadow-color': `rgb(${lightColorState.value})` }}
             >
               <ha-state-icon
                 hass={hass.value}
                 stateObj={lightState.value}
               ></ha-state-icon>
             </Button>
-            <CardTitle>{currentConfig.title}</CardTitle>
-            <CardDescription>{currentConfig.subtitle}</CardDescription>
+            <div>
+              <CardTitle className="text-lg">{currentConfig.title}</CardTitle>
+              <CardDescription>{currentConfig.subtitle}</CardDescription>
+            </div>
           </div>
-          <div className="flex-none text-2xl font-medium tracking-tight">
+          <div className="flex-none text-md font-medium tracking-tight">
             {temperatureState.value}
           </div>
         </CardHeader>
         <CardContent className="mt-auto">
           <div className="flex items-center gap-3">
-            <Button size="icon-lg" aria-label="Blinds" onClick={handleBlindsAction}>
+            <Button
+              size="icon-lg"
+              aria-label="Blinds"
+              onClick={handleBlindsAction}
+            >
               <ha-state-icon
                 hass={hass.value}
                 stateObj={blindsState.value}
+                style={{ '--mdc-icon-size': '20px' }}
               ></ha-state-icon>
             </Button>
           </div>
