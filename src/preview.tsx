@@ -7,6 +7,7 @@ import { RoomCard } from '@/cards/room-card';
 import { HomeAssistant } from './lib/types';
 import { hass } from './mocks/hass';
 import { DoorOpenCard } from './cards/door-open-card';
+import { CarCard } from './cards/car-card';
 
 const styleSheet = new CSSStyleSheet();
 styleSheet.replaceSync(styles);
@@ -46,4 +47,12 @@ createAndDisplayCard('room-card', RoomCard, {
 
 createAndDisplayCard('door-open-card', DoorOpenCard, {
   entity: 'sensor.fake_door_open_1',
+} as any);
+
+createAndDisplayCard('car-card', CarCard, {
+  entity: 'sensor.fake_car_1',
+  rangeEntity: 'sensor.fake_car_range_1',
+  chargingStatusEntity: 'sensor.fake_car_charging_status_1',
+  chargeLevelEntity: 'sensor.fake_car_charge_level_1',
+  fullyChargedTimeEntity: 'sensor.fake_car_fully_charged_time_1',
 } as any);

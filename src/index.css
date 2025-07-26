@@ -133,3 +133,21 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes chargingPulse {
+  0% {
+    left: -62px;
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  40% {
+    left: calc(100% - 62px);
+    opacity: 1;
+  }
+  100% {
+    left: calc(100% - 62px);
+    opacity: 0;
+  }
+}
