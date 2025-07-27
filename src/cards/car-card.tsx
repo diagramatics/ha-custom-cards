@@ -88,7 +88,7 @@ export const CarCard = ({ hass, config }: CarCardProps) => {
       <div className="relative h-full flex flex-col text-white">
         <CardHeader>
           <div className="text-3xl font-bold">{chargeLevel}%</div>
-          <div className="text-xl">{range} km</div>
+          <div className="text-xl">{range.toFixed(0)} km</div>
         </CardHeader>
 
         <div className="flex-1" />
