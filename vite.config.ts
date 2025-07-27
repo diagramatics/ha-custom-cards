@@ -9,6 +9,7 @@ const CORS_DEFAULT =
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const CORS_ORIGIN = env.CORS_ORIGIN?.split(',') || [];
+  const PORT = env.PORT || 5173;
 
   return {
     plugins: [
@@ -23,10 +24,18 @@ export default defineConfig(({ mode }) => {
       },
     },
     preview: {
-      port: 5173,
+      port: PORT,
       strictPort: true,
       cors: {
         origin: [...CORS_ORIGIN, CORS_DEFAULT],
+      },
+      proxy: {
+        '/src/ha-dev.ts': {
+          target: `http://localhost:${PORT}`,
+          changeOrigin: true,
+          secure: true,
+          rewrite: (path) => path.replace(/^\/src\/ha-dev.ts/, '/ha-custom-cards.js'),
+        },
       },
     },
     build: {

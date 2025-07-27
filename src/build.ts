@@ -20,10 +20,10 @@ document.body.style.position = 'relative';
 const isDev = import.meta.env.DEV;
 
 const init = async () => {
-
-  if (!isDev) {
+  if (isDev) {
     const response = await fetch('http://localhost:5173/src/ha-dev.ts', {
       method: 'HEAD',
+      signal: AbortSignal.timeout(1000),
     });
     if (response.ok) {
       return;
