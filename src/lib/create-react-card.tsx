@@ -10,10 +10,15 @@ export type ReactCardProps<T> = {
   editMode: Signal<boolean>;
 };
 
+export type ReactCardEditorProps<T> = {
+  config: Signal<T>;
+};
+
 export const createReactCard = (
   cardName: string,
   ReactComponent: ElementType,
   styles: CSSStyleSheet,
+  EditorComponent?: ElementType,
 ) => {
   class Card extends HTMLElement {
     root: Root;
@@ -101,8 +106,62 @@ export const createReactCard = (
     // }
   };
 
+  class CardEditor extends HTMLElement {
+    root: Root;
+
+    signals = {
+      config: signal({}),
+    };
+
+    constructor() {
+      super();
+
+      const shadow = this.attachShadow({ mode: 'open' });
+      this.root = createRoot(shadow);
+      shadow.adoptedStyleSheets = [styles];
+
+      this.render();
+    }
+
+    setConfig(config: HomeAssistant['config']) {
+      this.signals.config.value = config;
+    }
+
+    configChanged(newConfig: HomeAssistant['config']) {
+      const event = new Event('config-changed', {
+        bubbles: true,
+        composed: true,
+      });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (event as any).detail = { config: newConfig };
+      this.dispatchEvent(event);
+    }
+
+    render() {
+      if (!EditorComponent) {
+        return;
+      }
+
+      this.root.render(
+        <StrictMode>
+          <EditorComponent
+            cardName={cardName}
+            config={this.signals.config}
+          />
+        </StrictMode>,
+      );
+    }
+  }
+
   try {
     customElements.define(cardName, Card);
+    customElements.define(`${cardName}-editor`, CardEditor);
+    window.customCards = window.customCards || [];
+    window.customCards.push({
+      type: cardName,
+      name: cardName,
+      preview: false,
+    });
     console.info(
       `%c${cardName} %cregistered.`,
       'color: orange; font-weight: bold; background: black',

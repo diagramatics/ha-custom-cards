@@ -1,8 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ReactCardProps } from '@/lib/create-react-card';
+import { ReactCardEditorProps, ReactCardProps } from '@/lib/create-react-card';
 import { useEntityState, useEntityStateValue } from '@/lib/hooks/hass-hooks';
 import { Clock, MapPin } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 
 const getRelativeTime = (date: Date) => {
   try {
@@ -12,16 +14,16 @@ const getRelativeTime = (date: Date) => {
   }
 };
 
-type CarCardProps = ReactCardProps<{
+type CarCardProps = {
   entity: string;
   rangeEntity: string;
   chargingStatusEntity: string;
   chargeLevelEntity: string;
   fullyChargedTimeEntity: string;
   imageUrl: string;
-}>;
+};
 
-export const CarCard = ({ hass, config }: CarCardProps) => {
+export const CarCard = ({ hass, config }: ReactCardProps<CarCardProps>) => {
   const currentConfig = config.value;
   const entityState = useEntityState(hass, currentConfig.entity);
   const entityName = entityState.value.attributes.friendly_name;
@@ -78,7 +80,8 @@ export const CarCard = ({ hass, config }: CarCardProps) => {
             className="absolute top-0 bottom-0 bg-gradient-to-r from-transparent to-yellow-300 opacity-90"
             style={{
               width: '64px',
-              animation: 'chargingPulse 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite',
+              animation:
+                'chargingPulse 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite',
             }}
           />
         </div>
@@ -113,5 +116,28 @@ export const CarCard = ({ hass, config }: CarCardProps) => {
         </CardContent>
       </div>
     </Card>
+  );
+};
+
+export const CarCardEditor = ({
+  config,
+}: ReactCardEditorProps<CarCardProps>) => {
+  const currentConfig = config.value;
+  return (
+    <div>
+      <h1>Car Card Editor</h1>
+      <div>
+        <Label>Entity</Label>
+        <Input
+          value={currentConfig.entity}
+          onChange={(e) => {
+            config.value = {
+              ...currentConfig,
+              entity: e.target.value,
+            };
+          }}
+        />
+      </div>
+    </div>
   );
 };

@@ -6,7 +6,7 @@ import { HeaderCard } from '@/cards/header-card';
 import { createReactCard } from '@/lib/create-react-card';
 import globalStyles from './global.css?inline';
 import styles from './index.css?inline';
-import { CarCard } from './cards/car-card';
+import { CarCard, CarCardEditor } from './cards/car-card';
 import { RefreshCard } from './cards/refresh-card';
 
 const globalStyleEl = document.createElement('style');
@@ -24,7 +24,7 @@ const init = async () => {
   createReactCard('door-open-card', DoorOpenCard, styleSheet);
   createReactCard('header-card', HeaderCard, styleSheet);
   createReactCard('transportnsw-card', TransportNSWCard, styleSheet);
-  createReactCard('car-card', CarCard, styleSheet);
+  createReactCard('car-card', CarCard, styleSheet, CarCardEditor);
   createReactCard('refresh-card', RefreshCard, styleSheet);
 };
 
