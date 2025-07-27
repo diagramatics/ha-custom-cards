@@ -7,7 +7,6 @@ import {
 } from '@/lib/hooks/hass-hooks';
 import { HomeAssistant } from '@/lib/types';
 import { Signal } from '@preact/signals-react';
-import { useSignals } from '@preact/signals-react/runtime';
 import { parse } from 'date-fns';
 import { useRef } from 'react';
 
@@ -36,7 +35,6 @@ const timeFormatter = new Intl.DateTimeFormat('en-AU', {
 });
 
 export const TransportNSWCard = ({ hass, config }: TransportNSWCardProps) => {
-  useSignals();
   const currentConfig = config.value;
   const title = currentConfig.title;
   return (

@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       react({
-        // plugins: [['@preact-signals/safe-react/swc', {}]]
+        plugins: [['@preact-signals/safe-react/swc', {}]],
       }),
       tailwindcss(),
     ],
@@ -34,7 +34,8 @@ export default defineConfig(({ mode }) => {
           target: `http://localhost:${PORT}`,
           changeOrigin: true,
           secure: true,
-          rewrite: (path) => path.replace(/^\/src\/ha-dev.ts/, '/ha-custom-cards.js'),
+          rewrite: (path) =>
+            path.replace(/^\/src\/ha-dev.ts/, '/ha-custom-cards.js'),
         },
       },
     },

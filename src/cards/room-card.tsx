@@ -11,7 +11,6 @@ import { useEntityStateValue, useEntityState, useEntityAttributeValue } from '@/
 import { handleAction } from '@/lib/ha/panels/lovelace/common/handle-actions';
 import { useRef } from 'react';
 import { HomeAssistant } from '@/lib/ha/types';
-import { useSignals } from '@preact/signals-react/runtime';
 import { cn } from '@/lib/utils';
 
 interface Config {
@@ -23,7 +22,6 @@ interface Config {
 }
 
 export const RoomCard = ({ hass, config }: ReactCardProps<Config>) => {
-  useSignals();
   const cardRef = useRef<HTMLDivElement>(null);
 
   const currentConfig = config.value;

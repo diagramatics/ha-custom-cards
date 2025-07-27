@@ -2,7 +2,6 @@ import { ReactCardProps } from '@/lib/create-react-card';
 import { useEntityState, useEntityStateValue } from '@/lib/hooks/hass-hooks';
 import { useShadowPortal } from '@/lib/hooks/use-shadow-portal';
 import { cn } from '@/lib/utils';
-import { useSignals } from '@preact/signals-react/runtime';
 import { createPortal } from 'react-dom';
 
 type DoorOpenCardProps = ReactCardProps<{
@@ -10,7 +9,6 @@ type DoorOpenCardProps = ReactCardProps<{
 }>;
 
 export const DoorOpenCard = ({ hass, config, editMode }: DoorOpenCardProps) => {
-  useSignals();
   const shadowPortal = useShadowPortal();
   const currentConfig = config.value;
   const entityState = useEntityState(hass, currentConfig.entity);

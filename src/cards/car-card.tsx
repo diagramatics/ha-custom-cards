@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ReactCardProps } from '@/lib/create-react-card';
 import { useEntityState, useEntityStateValue } from '@/lib/hooks/hass-hooks';
-import { useSignals } from '@preact/signals-react/runtime';
 import { Clock, MapPin } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 
@@ -23,7 +22,6 @@ type CarCardProps = ReactCardProps<{
 }>;
 
 export const CarCard = ({ hass, config }: CarCardProps) => {
-  useSignals();
   const currentConfig = config.value;
   const entityState = useEntityState(hass, currentConfig.entity);
   const entityName = entityState.value.attributes.friendly_name;
