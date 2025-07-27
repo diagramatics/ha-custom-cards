@@ -71,7 +71,7 @@ export const CarCard = ({ hass, config }: CarCardProps) => {
       />
 
       {/* Charging animation */}
-      {!isCharging && (
+      {isCharging && (
         <div
           className="absolute top-0 bottom-0 left-0 overflow-hidden"
           style={{ width: `${chargeLevel}%` }}
