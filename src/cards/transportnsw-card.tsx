@@ -1,18 +1,23 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ReactCardProps } from '@/lib/create-react-card';
 import { handleAction } from '@/lib/ha/panels/lovelace/common/handle-actions';
-import {
-  useEntityAttributeValue,
-  useEntityState,
-} from '@/lib/hooks/hass-hooks';
+import { useEntityState } from '@/lib/hooks/hass-hooks';
 import { HomeAssistant } from '@/lib/types';
 import { Signal } from '@preact/signals-react';
-import { parse } from 'date-fns';
+import { parseISO } from 'date-fns';
 import { useRef } from 'react';
+
+type TransportNSWConfiguration = {
+  due_entity: string;
+  departure_entity: string;
+  arrival_time_entity: string;
+  line_name: string;
+  transport_name: string;
+};
 
 type TransportNSWCardProps = ReactCardProps<{
   title: string;
-  entities: string[];
+  configuration: TransportNSWConfiguration[];
 }>;
 
 const trainLineColors: { [k: string]: string } = {
@@ -45,65 +50,65 @@ export const TransportNSWCard = ({ hass, config }: TransportNSWCardProps) => {
         </CardHeader>
       )}
       <CardContent className="px-2 py-2">
-        {currentConfig.entities.map((entity) => (
-          <TransportInfo key={entity} hass={hass} entity={entity} />
+        {currentConfig.configuration.map((config, i) => (
+          <TransportInfo
+            key={`${config.line_name}-${i}`}
+            hass={hass}
+            due_entity={config.due_entity}
+            departure_entity={config.departure_entity}
+            arrival_time_entity={config.arrival_time_entity}
+            line_name={config.line_name}
+            transport_name={config.transport_name}
+          />
         ))}
       </CardContent>
     </Card>
   );
 };
 
+type TransportInfoProps = {
+  hass: Signal<HomeAssistant>;
+  due_entity: string;
+  departure_entity: string;
+  arrival_time_entity: string;
+  line_name: string;
+  transport_name: string;
+};
+
 const TransportInfo = ({
   hass,
-  entity,
-}: {
-  hass: Signal<HomeAssistant>;
-  entity: string;
-}) => {
+  due_entity,
+  departure_entity,
+  arrival_time_entity,
+  line_name,
+  transport_name,
+}: TransportInfoProps) => {
   const rootRef = useRef<HTMLButtonElement>(null);
-  const state = useEntityState(hass, entity);
-  const due = state.value ? state.value.state : 'unavailable';
-  const departureTime = useEntityAttributeValue(
-    hass,
-    entity,
-    'departure_time_estimated',
-  );
-  const arrivalTime = useEntityAttributeValue(
-    hass,
-    entity,
-    'arrival_time_estimated',
-  );
+  const dueState = useEntityState(hass, due_entity);
+  const departureState = useEntityState(hass, departure_entity);
+  const arrivalTimeState = useEntityState(hass, arrival_time_entity);
+  const due = dueState.value.state;
+  const departureTime = departureState.value.state;
+  const arrivalTime = arrivalTimeState.value.state;
 
-  const lineName = useEntityAttributeValue(
-    hass,
-    entity,
-    'origin_line_name_short',
-  );
-
-  const transportName = useEntityAttributeValue(
-    hass,
-    entity,
-    'origin_transport_name',
-  );
+  const lineName = line_name;
+  const transportName = transport_name;
 
   const handleTapAction = () => {
     handleAction(
       rootRef.current!,
       hass.value as unknown as HomeAssistant,
-      { entity, tap_action: { action: 'more-info' } },
+      { entity: due_entity, tap_action: { action: 'more-info' } },
       'tap',
     );
   };
 
-  const departureTimeFormatted = timeFormatter.format(
-    parse(departureTime.value, 'HH:mm:ss', new Date()),
-  );
-  const arrivalTimeFormatted = timeFormatter.format(
-    parse(arrivalTime.value, 'HH:mm:ss', new Date()),
-  );
+  const departureTimeFormatted =
+    departureTime && timeFormatter.format(parseISO(departureTime));
+  const arrivalTimeFormatted =
+    arrivalTime && timeFormatter.format(parseISO(arrivalTime));
 
-  const color =
-    transportName.value === 'BUS' ? busColor : trainLineColors[lineName.value];
+  const color = transportName === 'BUS' ? busColor : trainLineColors[lineName];
 
   return (
     <button
@@ -115,7 +120,7 @@ const TransportInfo = ({
         className="inline-block px-3 py-2 text-bold text-white rounded-sm"
         style={{ backgroundColor: color }}
       >
-        {lineName.value}
+        {lineName}
       </div>
       <div className="@md:hidden">
         <div className="text-lg">
