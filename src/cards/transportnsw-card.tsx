@@ -4,8 +4,8 @@ import { handleAction } from '@/lib/ha/panels/lovelace/common/handle-actions';
 import { useEntityState } from '@/lib/hooks/hass-hooks';
 import { HomeAssistant } from '@/lib/types';
 import { Signal } from '@preact/signals-react';
-import { parseISO } from 'date-fns';
 import { useRef } from 'react';
+import { formatTransportTime } from './transportnsw-time';
 
 type TransportNSWConfiguration = {
   due_entity: string;
@@ -33,11 +33,6 @@ const trainLineColors: { [k: string]: string } = {
 };
 
 const busColor = '#02ade8';
-
-const timeFormatter = new Intl.DateTimeFormat('en-AU', {
-  hour: '2-digit',
-  minute: '2-digit',
-});
 
 export const TransportNSWCard = ({ hass, config }: TransportNSWCardProps) => {
   const currentConfig = config.value;
@@ -95,18 +90,21 @@ const TransportInfo = ({
   const transportName = transport_name;
 
   const handleTapAction = () => {
+    const root = rootRef.current;
+    if (!root) {
+      return;
+    }
+
     handleAction(
-      rootRef.current!,
+      root,
       hass.value as unknown as HomeAssistant,
       { entity: due_entity, tap_action: { action: 'more-info' } },
       'tap',
     );
   };
 
-  const departureTimeFormatted =
-    departureTime && timeFormatter.format(parseISO(departureTime));
-  const arrivalTimeFormatted =
-    arrivalTime && timeFormatter.format(parseISO(arrivalTime));
+  const departureTimeFormatted = formatTransportTime(departureTime);
+  const arrivalTimeFormatted = formatTransportTime(arrivalTime);
 
   const color = transportName === 'BUS' ? busColor : trainLineColors[lineName];
 
