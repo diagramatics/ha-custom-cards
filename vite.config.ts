@@ -3,8 +3,7 @@ import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 import tailwindcss from '@tailwindcss/vite';
 
-const CORS_DEFAULT =
-  /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/;
+const CORS_DEFAULT = /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/;
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
@@ -34,8 +33,7 @@ export default defineConfig(({ mode }) => {
           target: `http://localhost:${PORT}`,
           changeOrigin: true,
           secure: true,
-          rewrite: (path) =>
-            path.replace(/^\/src\/ha-dev.ts/, '/ha-custom-cards.js'),
+          rewrite: (path) => path.replace(/^\/src\/ha-dev.ts/, '/ha-custom-cards.js'),
         },
       },
     },

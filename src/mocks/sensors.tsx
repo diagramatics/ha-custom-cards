@@ -26,10 +26,7 @@ const defaults = {
   last_updated: now.toISOString(),
 } satisfies HassEntity;
 
-export const createSensor = (
-  entity_id: string,
-  overrides: Partial<HassEntity> = {},
-) => {
+export const createSensor = (entity_id: string, overrides: Partial<HassEntity> = {}) => {
   return createEntity(entity_id, defaults, overrides);
 };
 

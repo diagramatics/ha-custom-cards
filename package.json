@@ -1,13 +1,16 @@
 {
   "name": "ha-custom-cards",
-  "private": true,
   "version": "0.1.1",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
     "start": "vite",
     "build": "vite build",
-    "lint": "tsc -b && eslint .",
+    "lint": "tsc -b && oxlint",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
     "preview": "vite preview",
     "postversion": "git push && git push --tags"
   },
@@ -33,20 +36,17 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@eslint/js": "^9.16.0",
     "@preact-signals/safe-react": "^0.9.0",
     "@tailwindcss/vite": "^4.0.5",
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.2",
     "@vitejs/plugin-react-swc": "^3.7.2",
-    "eslint": "^9.16.0",
-    "eslint-plugin-react-hooks": "^5.1.0",
-    "eslint-plugin-react-refresh": "^0.4.16",
-    "globals": "^15.13.0",
+    "oxfmt": "^0.64.0",
+    "oxlint": "^1.79.0",
+    "oxlint-tsgolint": "^7.0.2001",
     "tailwindcss": "^4.0.0",
     "typescript": "~5.7.2",
-    "typescript-eslint": "^8.18.0",
     "vite": "^6.0.3"
   },
   "overrides": {

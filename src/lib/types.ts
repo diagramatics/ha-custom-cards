@@ -65,7 +65,8 @@ export interface HomeAssistant {
     parameters?: Record<string, any>,
     headers?: Record<string, string>,
   ): Promise<T>;
-  callApiRaw( // introduced in 2024.11
+  callApiRaw(
+    // introduced in 2024.11
     method: 'GET' | 'POST' | 'PUT' | 'DELETE',
     path: string,
     parameters?: Record<string, any>,
@@ -82,11 +83,7 @@ export interface HomeAssistant {
   // ): Promise<LocalizeFunc>;
   // loadFragmentTranslation(fragment: string): Promise<LocalizeFunc | undefined>;
   formatEntityState(stateObj: HassEntity, state?: string): string;
-  formatEntityAttributeValue(
-    stateObj: HassEntity,
-    attribute: string,
-    value?: any,
-  ): string;
+  formatEntityAttributeValue(stateObj: HassEntity, attribute: string, value?: any): string;
   formatEntityAttributeName(stateObj: HassEntity, attribute: string): string;
 }
 
@@ -112,4 +109,3 @@ export interface EntityRegistryDisplayEntry {
   platform?: string;
   display_precision?: number;
 }
-

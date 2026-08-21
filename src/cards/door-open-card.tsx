@@ -31,12 +31,8 @@ export const DoorOpenCard = ({ hass, config, editMode }: DoorOpenCardProps) => {
     <>
       {editMode.value && (
         <div className="w-full h-full border border-dashed bg-muted rounded-md p-4 flex flex-col items-center justify-center">
-          <div className="text-lg font-medium text-muted-foreground">
-            Door Open Card
-          </div>
-          <div className="text-sm text-muted-foreground">
-            State: {entityStateValue.value}
-          </div>
+          <div className="text-lg font-medium text-muted-foreground">Door Open Card</div>
+          <div className="text-sm text-muted-foreground">State: {entityStateValue.value}</div>
         </div>
       )}
       {shadowPortal &&

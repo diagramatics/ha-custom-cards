@@ -69,9 +69,6 @@ const defaults = {
   },
 } satisfies HassEntity;
 
-export const createLight = (
-  entity_id: string,
-  overrides: Partial<HassEntity> = {},
-) => {
+export const createLight = (entity_id: string, overrides: Partial<HassEntity> = {}) => {
   return createEntity(entity_id, defaults, overrides);
 };

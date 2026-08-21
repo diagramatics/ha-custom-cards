@@ -7,9 +7,7 @@ const timeFormatter = new Intl.DateTimeFormat('en-AU', {
 
 const unavailableTimeStates = new Set(['unknown', 'unavailable']);
 
-export const formatTransportTime = (
-  timestamp: string | null | undefined,
-): string => {
+export const formatTransportTime = (timestamp: string | null | undefined): string => {
   if (!timestamp || unavailableTimeStates.has(timestamp)) {
     return '—';
   }

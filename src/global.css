@@ -4,6 +4,6 @@
   This file imports the tailwindcss utilities.css file and applies it to the
   global scope so we can bring some of those @property properties back.
 */
-@import "tailwindcss/utilities.css" layer(utilities);
+@import 'tailwindcss/utilities.css' layer(utilities);
 @source "components";
 @source "cards";

@@ -1,0 +1,16 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "env": {
+    "browser": true
+  },
+  "options": {
+    "typeAware": true
+  },
+  "ignorePatterns": ["dist", "src/lib/ha"],
+  "plugins": ["eslint", "typescript", "react", "oxc"],
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "warn",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }]
+  }
+}

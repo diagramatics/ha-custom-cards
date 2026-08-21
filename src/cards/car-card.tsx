@@ -31,23 +31,14 @@ export const CarCard = ({ hass, config }: ReactCardProps<CarCardProps>) => {
   const rangeState = useEntityState(hass, currentConfig.rangeEntity);
   const range = Number(rangeState.value.state);
 
-  const chargingStatus = useEntityStateValue(
-    hass,
-    currentConfig.chargingStatusEntity,
-  );
+  const chargingStatus = useEntityStateValue(hass, currentConfig.chargingStatusEntity);
   const imageUrl = currentConfig.imageUrl;
 
-  const chargeLevelState = useEntityState(
-    hass,
-    currentConfig.chargeLevelEntity,
-  );
+  const chargeLevelState = useEntityState(hass, currentConfig.chargeLevelEntity);
   const chargeLevel = Number(chargeLevelState.value.state);
   const isCharging = chargingStatus.value === 'Charging';
 
-  const fullyChargedTimeEntity = useEntityState(
-    hass,
-    currentConfig.fullyChargedTimeEntity,
-  );
+  const fullyChargedTimeEntity = useEntityState(hass, currentConfig.fullyChargedTimeEntity);
   const fullyChargedTime = new Date(fullyChargedTimeEntity.value.state);
   const relativeTime = getRelativeTime(fullyChargedTime);
 
@@ -80,8 +71,7 @@ export const CarCard = ({ hass, config }: ReactCardProps<CarCardProps>) => {
             className="absolute top-0 bottom-0 bg-gradient-to-r from-transparent to-yellow-300 opacity-90"
             style={{
               width: '64px',
-              animation:
-                'chargingPulse 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite',
+              animation: 'chargingPulse 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite',
             }}
           />
         </div>
@@ -119,9 +109,7 @@ export const CarCard = ({ hass, config }: ReactCardProps<CarCardProps>) => {
   );
 };
 
-export const CarCardEditor = ({
-  config,
-}: ReactCardEditorProps<CarCardProps>) => {
+export const CarCardEditor = ({ config }: ReactCardEditorProps<CarCardProps>) => {
   const currentConfig = config.value;
   return (
     <div>

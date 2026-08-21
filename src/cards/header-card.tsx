@@ -29,8 +29,8 @@ export const HeaderCard = ({ config }: HeaderCardProps) => {
         currentConfig.color === 'light'
           ? 'text-white'
           : currentConfig.color === 'dark'
-          ? 'text-black'
-          : '',
+            ? 'text-black'
+            : '',
       )}
     >
       <div className="text-3xl font-medium" style={{ fontFeatureSettings: '"ss01" on' }}>

@@ -7,9 +7,8 @@ export const hass: Partial<HomeAssistant> = {
     ...createLight('light.fake_light_1'),
     ...createTemperatureSensor('sensor.fake_temperature_1'),
   },
-  formatEntityState: (stateObj, state) =>
-    (state != null ? state : stateObj.state) ?? '',
+  formatEntityState: (stateObj, state) => (state != null ? state : stateObj.state) ?? '',
   formatEntityAttributeName: (_stateObj, attribute) => attribute,
   formatEntityAttributeValue: (stateObj, attribute, value) =>
-    value != null ? value : stateObj.attributes[attribute] ?? '',
+    value != null ? value : (stateObj.attributes[attribute] ?? ''),
 };

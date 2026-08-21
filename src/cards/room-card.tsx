@@ -1,13 +1,11 @@
 import { type ReactCardProps } from '@/lib/create-react-card';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useEntityStateValue, useEntityState, useEntityAttributeValue } from '@/lib/hooks/hass-hooks';
+import {
+  useEntityStateValue,
+  useEntityState,
+  useEntityAttributeValue,
+} from '@/lib/hooks/hass-hooks';
 import { handleAction } from '@/lib/ha/panels/lovelace/common/handle-actions';
 import { useRef } from 'react';
 import { HomeAssistant } from '@/lib/ha/types';
@@ -27,10 +25,7 @@ export const RoomCard = ({ hass, config }: ReactCardProps<Config>) => {
   const currentConfig = config.value;
   const lightState = useEntityState(hass, currentConfig.light_entity);
   const lightColorState = useEntityAttributeValue(hass, currentConfig.light_entity, 'rgb_color');
-  const temperatureState = useEntityStateValue(
-    hass,
-    currentConfig.temperature_entity,
-  );
+  const temperatureState = useEntityStateValue(hass, currentConfig.temperature_entity);
   const blindsState = useEntityState(hass, currentConfig.blinds_entity);
 
   // const backgroundImage =
@@ -82,9 +77,7 @@ export const RoomCard = ({ hass, config }: ReactCardProps<Config>) => {
               size="icon-lg"
               aria-label="Lights"
               onClick={handleLightAction}
-              variant={
-                lightState.value?.state === 'on' ? 'default' : 'ghostOutline'
-              }
+              variant={lightState.value?.state === 'on' ? 'default' : 'ghostOutline'}
               className={cn(
                 'drop-shadow-md transition-shadow',
                 lightState.value?.state === 'on'
@@ -93,10 +86,7 @@ export const RoomCard = ({ hass, config }: ReactCardProps<Config>) => {
               )}
               style={{ '--tw-shadow-color': `rgb(${lightColorState.value})` }}
             >
-              <ha-state-icon
-                hass={hass.value}
-                stateObj={lightState.value}
-              ></ha-state-icon>
+              <ha-state-icon hass={hass.value} stateObj={lightState.value}></ha-state-icon>
             </Button>
             <div>
               <CardTitle className="text-lg">{currentConfig.title}</CardTitle>
@@ -109,11 +99,7 @@ export const RoomCard = ({ hass, config }: ReactCardProps<Config>) => {
         </CardHeader>
         <CardContent className="mt-auto">
           <div className="flex items-center gap-3">
-            <Button
-              size="icon-lg"
-              aria-label="Blinds"
-              onClick={handleBlindsAction}
-            >
+            <Button size="icon-lg" aria-label="Blinds" onClick={handleBlindsAction}>
               <ha-state-icon
                 hass={hass.value}
                 stateObj={blindsState.value}

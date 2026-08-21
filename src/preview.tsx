@@ -32,10 +32,15 @@ const createAndDisplayCard = (
 const carouselCardContainer = document.createElement('div');
 rootEl.appendChild(carouselCardContainer);
 carouselCardContainer.style.minHeight = '300px';
-createAndDisplayCard('carousel-card', CarouselCard, {
-  entities: [],
-  options: {},
-} as any, carouselCardContainer);
+createAndDisplayCard(
+  'carousel-card',
+  CarouselCard,
+  {
+    entities: [],
+    options: {},
+  } as any,
+  carouselCardContainer,
+);
 
 createAndDisplayCard('room-card', RoomCard, {
   title: 'Living room',

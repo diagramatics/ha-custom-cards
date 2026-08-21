@@ -1,4 +1,4 @@
-import { ReactCardProps } from "@/lib/create-react-card";
+import { ReactCardProps } from '@/lib/create-react-card';
 import { useEffect, useRef } from 'react';
 
 type RefreshCardProps = ReactCardProps<{
@@ -28,26 +28,22 @@ export const RefreshCard = ({ config, editMode }: RefreshCardProps) => {
 
   return (
     <>
-    {editMode.value && (
-      refreshInterval > 60 ? (
-        <div className="w-full h-full border border-dashed bg-muted rounded-md p-4 flex flex-col items-center justify-center">
-          <div className="text-lg font-medium text-muted-foreground">
-            Refresh Card
+      {editMode.value &&
+        (refreshInterval > 60 ? (
+          <div className="w-full h-full border border-dashed bg-muted rounded-md p-4 flex flex-col items-center justify-center">
+            <div className="text-lg font-medium text-muted-foreground">Refresh Card</div>
+            <div className="text-sm text-muted-foreground">
+              Refresh interval: {refreshInterval} seconds
+            </div>
           </div>
-          <div className="text-sm text-muted-foreground">
-            Refresh interval: {refreshInterval} seconds
+        ) : (
+          <div className="w-full h-full border border-dashed border-destructive bg-destructive/10 rounded-md p-4 flex flex-col items-center justify-center">
+            <div className="text-lg font-medium text-muted-foreground">Refresh Card</div>
+            <div className="text-sm text-muted-foreground">
+              Refresh interval must be at least 60 seconds. Please update the card configuration.
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="w-full h-full border border-dashed border-destructive bg-destructive/10 rounded-md p-4 flex flex-col items-center justify-center">
-          <div className="text-lg font-medium text-muted-foreground">
-            Refresh Card
-          </div>
-          <div className="text-sm text-muted-foreground">
-            Refresh interval must be at least 60 seconds. Please update the card configuration.
-          </div>
-        </div>
-      ))}
+        ))}
     </>
   );
 };

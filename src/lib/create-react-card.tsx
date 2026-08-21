@@ -98,13 +98,13 @@ export const createReactCard = (
 
     // TODO: Implement this: https://developers.home-assistant.io/docs/frontend/custom-ui/custom-card/#sizing-in-sections-view
     // getLayoutOptions() {
-      // return {
-      //   grid_rows: 2,
-      //   grid_columns: 2,
-      //   grid_min_rows: 2,
-      // }
+    // return {
+    //   grid_rows: 2,
+    //   grid_columns: 2,
+    //   grid_min_rows: 2,
     // }
-  };
+    // }
+  }
 
   class CardEditor extends HTMLElement {
     root: Root;
@@ -144,10 +144,7 @@ export const createReactCard = (
 
       this.root.render(
         <StrictMode>
-          <EditorComponent
-            cardName={cardName}
-            config={this.signals.config}
-          />
+          <EditorComponent cardName={cardName} config={this.signals.config} />
         </StrictMode>,
       );
     }

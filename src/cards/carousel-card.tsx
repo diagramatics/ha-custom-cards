@@ -13,9 +13,7 @@ export type CarouselCardProps = ReactCardProps<{
   options: any;
 }>;
 
-const loadCardHelpers = window.loadCardHelpers
-  ? window.loadCardHelpers()
-  : undefined;
+const loadCardHelpers = window.loadCardHelpers ? window.loadCardHelpers() : undefined;
 
 export const CarouselCard = ({ config, hass }: CarouselCardProps) => {
   const [elements, setElements] = useState<HTMLElement[]>([]);

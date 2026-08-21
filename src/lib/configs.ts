@@ -11,4 +11,3 @@ export const mergeConfigs = <T extends Record<string, unknown>>(
     return acc;
   }, {} as T);
 };
-
